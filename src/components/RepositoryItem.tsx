@@ -1,15 +1,27 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { RepositoryData } from "../types";
-
+const styles = StyleSheet.create({
+  container: {
+    borderColor: "#fab",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding:5,
+    marginHorizontal: 5,
+  },
+  text: {
+    fontSize: 14,
+  },
+});
 const RepositoryItem = (item: RepositoryData) => {
-  console.log(item);
   return (
-    <View>
-      <Text>Full name:{item.fullName}</Text>
-      <Text>Description:{item.description}</Text>
-      <Text>Language:{item.language}</Text>
-      <Text>Stars:{item.stargazersCount}</Text>
-      
+    <View style={styles.container}>
+      <Text>Full name: {item.fullName}</Text>
+      <Text>Description: {item.description}</Text>
+      <Text>Language: {item.language}</Text>
+      <Text>Stars: {item.stargazersCount}</Text>
+      <Text>Forks: {item.forksCount}</Text>
+      <Text>Reviews: {item.reviewCount}</Text>
+      <Text>Rating: {item.ratingAverage}</Text>
     </View>
   );
 };
