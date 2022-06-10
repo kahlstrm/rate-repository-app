@@ -26,11 +26,14 @@ const styles = StyleSheet.create({
   fontSizeSubheading: {
     fontSize: theme.fontSizes.subheading,
   },
-  fontSizeHuge:{
-    fontSize:theme.fontSizes.huge
+  fontSizeHuge: {
+    fontSize: theme.fontSizes.huge,
   },
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
+  },
+  centerText: {
+    textAlign: "center",
   },
 });
 interface TextProps {
@@ -38,11 +41,13 @@ interface TextProps {
   fontSize?: keyof Theme["fontSizes"];
   fontWeight?: keyof Theme["fontWeights"];
   style?: StyleProp<TextStyle>;
+  center?: boolean;
 }
 const Text: React.FC<TextProps> = ({
   color,
   fontSize,
   fontWeight,
+  center,
   style,
   ...props
 }) => {
@@ -52,20 +57,15 @@ const Text: React.FC<TextProps> = ({
     color === "primary" && styles.colorPrimary,
     color === "white" && styles.colorWhite,
     fontSize === "subheading" && styles.fontSizeSubheading,
-    fontSize=== "huge" && styles.fontSizeHuge,
+    fontSize === "huge" && styles.fontSizeHuge,
     fontWeight === "bold" && styles.fontWeightBold,
+    center && styles.centerText,
     style,
   ];
 
   return <NativeText style={textStyle} {...props} />;
 };
-export const Subheading: React.FC<{style?:StyleProp<TextStyle>}> = (props) => {
-  return (
-    <Text
-      fontWeight="bold"
-      fontSize="subheading"
-      {...props}
-    ></Text>
-  );
+export const Subheading: React.FC<TextProps> = (props) => {
+  return <Text fontWeight="bold" fontSize="subheading" {...props}></Text>;
 };
 export default Text;

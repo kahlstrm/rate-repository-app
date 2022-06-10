@@ -42,8 +42,8 @@ interface BottomItemProps {
 const BottomItem: React.FC<BottomItemProps> = ({ name, value }) => {
   return (
     <View style={{ flexGrow: 1 }}>
-      <Subheading style={{ textAlign: "center" }}>{value}</Subheading>
-      <Text style={{ textAlign: "center" }} color="textSecondary">
+      <Subheading center>{value}</Subheading>
+      <Text center color="textSecondary">
         {name}
       </Text>
     </View>
