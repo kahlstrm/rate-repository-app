@@ -1,4 +1,5 @@
 import { FlatList, Image, StyleSheet, View } from "react-native";
+import theme from "../theme";
 import { RepositoryData } from "../types";
 import Text, { Subheading } from "./Text";
 const styles = StyleSheet.create({
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   },
   language: {
     padding: 5,
-    backgroundColor: "#0265d3",
+    backgroundColor: theme.colors.primary,
     borderRadius: 5,
     overflow: "hidden",
     alignSelf: "flex-start",
