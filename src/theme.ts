@@ -7,6 +7,7 @@ export interface Theme {
     primary: string;
     white: string;
     appBarBGColor: string;
+    mainBackground:string;
   };
   fontSizes: {
     body: number;
@@ -29,6 +30,7 @@ const theme: Theme = {
     primary: "#0366d6",
     white: "white",
     appBarBGColor: "#24292e",
+    mainBackground:"lightblue"
   },
   fontSizes: {
     body: 14,

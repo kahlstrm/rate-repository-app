@@ -1,33 +1,40 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, ScrollView } from "react-native";
 import Constants from "expo-constants";
 import theme from "../theme";
 import Text, { Subheading } from "./Text";
+import { Link } from "react-router-native";
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.appBarBGColor,
     paddingHorizontal: 10,
-    paddingBottom: 20,
+    paddingBottom: 10,
     flexDirection: "row",
   },
   tabButton: {
-    padding:10
+    padding: 10,
   },
   // ...
 });
-const AppBarTab: React.FC = (props) => {
+interface TabProps {
+  link: string;
+}
+const AppBarTab: React.FC<TabProps> = ({ children, link }) => {
   return (
-    <Pressable style={styles.tabButton} onPress={() => console.log("pressed")}>
-      <Text fontSize="huge" color="white">
-        {props.children}
+    <Link to={link} style={styles.tabButton}>
+      <Text fontSize="subheading" color="white">
+        {children}
       </Text>
-    </Pressable>
+    </Link>
   );
 };
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <AppBarTab>Repositories</AppBarTab>
+      <ScrollView horizontal>
+        <AppBarTab link={"/"}>Repositories</AppBarTab>
+        <AppBarTab link={"/login"}>Sign In</AppBarTab>
+      </ScrollView>
     </View>
   );
 };
