@@ -1,4 +1,4 @@
-import { TextStyle } from "react-native";
+import { Platform, TextStyle } from "react-native";
 
 export interface Theme {
   colors: {
@@ -8,6 +8,7 @@ export interface Theme {
     white: string;
     appBarBGColor: string;
     mainBackground:string;
+    errorColor:string;
   };
   fontSizes: {
     body: number;
@@ -30,7 +31,8 @@ const theme: Theme = {
     primary: "#0366d6",
     white: "white",
     appBarBGColor: "#24292e",
-    mainBackground:"lightblue"
+    mainBackground:"lightblue",
+    errorColor:"#d73a4a"
   },
   fontSizes: {
     body: 14,
@@ -38,7 +40,11 @@ const theme: Theme = {
     huge: 24,
   },
   fonts: {
-    main: "System",
+    main: Platform.select({
+      android:'Roboto',
+      ios:'Arial',
+      default:'System'
+    }),
   },
   fontWeights: {
     normal: "400",
