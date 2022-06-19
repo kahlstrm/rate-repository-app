@@ -1,13 +1,12 @@
 import { Formik, FormikValues } from "formik";
 import { View } from "react-native";
-import * as yup from "yup";
+import { useNavigate } from "react-router-native";
+import useSignIn from "../hooks/useSignIn";
+import { loginValidationSchema } from "../schema/validationSchemas";
+import { AccessTokenFromApi, SignInFuncProps } from "../types";
 import Button from "./Button";
 import FormikTextInput from "./FormikTextInput";
 
-const validationSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
-  password: yup.string().required("Password is required"),
-});
 interface SignInFormProps {
   onSubmit: (values: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -16,20 +15,29 @@ const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
     <View>
       <FormikTextInput name="username" placeholder="Username" />
       <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-      <Button onPress={onSubmit} name="Sign In" />
+      <Button onPress={onSubmit} text="Sign In" />
     </View>
   );
 };
 const SignIn = () => {
-  const onSubmit = (values: FormikValues) => {
-    console.log(values);
+  const navigate = useNavigate();
+  const { signIn } = useSignIn();
+  const onSubmit = async (values: FormikValues) => {
+    const { username, password } = values;
+    try {
+      const { data } = await signIn({ username, password });
+      console.log(data);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <View>
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={onSubmit}
-        validationSchema={validationSchema}
+        validationSchema={loginValidationSchema}
       >
         {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
       </Formik>

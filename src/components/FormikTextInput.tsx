@@ -1,20 +1,24 @@
-import { StyleSheet,TextInputProps } from "react-native";
-import { FieldProps, useField } from "formik";
+import { StyleSheet, TextInputProps } from "react-native";
+import { useField } from "formik";
 
 import TextInput from "./TextInput";
 import Text from "./Text";
 import theme from "../theme";
+import React from "react";
 
 const styles = StyleSheet.create({
   errorText: {
     marginTop: 5,
-    color: theme.colors.errorColor
+    color: theme.colors.errorColor,
   },
 });
 interface FormikTextInputProps extends TextInputProps {
   name: string;
 }
-const FormikTextInput = ({ name, ...props }: FormikTextInputProps) => {
+const FormikTextInput: React.FC<FormikTextInputProps> = ({
+  name,
+  ...props
+}) => {
   const [field, meta, helpers] = useField(name);
   const showError = meta.touched && meta.error;
 

@@ -2,7 +2,7 @@ import { Pressable, PressableProps, StyleSheet } from "react-native";
 import theme, { Theme } from "../theme";
 import Text from "./Text";
 interface ButtonProps extends PressableProps {
-  name?: string;
+  text?: string;
 }
 const styles = StyleSheet.create({
   button: {
@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
     textAlign:"center",
   }
 });
-const Button: React.FC<ButtonProps> = ({ name, onPress }) => {
+const Button: React.FC<ButtonProps> = ({ text, onPress }) => {
   const buttonStyle = [styles.button];
   return (
     <Pressable style={buttonStyle} onPress={onPress}>
-      <Text fontSize="huge" center color="white">{name ? name : "Add text"}</Text>
+      <Text fontSize="huge" center color="white">{text ? text : "Add text"}</Text>
     </Pressable>
   );
 };
