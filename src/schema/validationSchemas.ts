@@ -19,21 +19,20 @@ export const repoResponseSchema = yup.object().shape({
         node: yup
           .object()
           .shape({
-            id: yup.string(),
+            id: yup.string().required(),
             name: yup.string(),
             ownerName: yup.string(),
             createdAt: yup.date(),
-            fullName: yup.string(),
-            reviewCount: yup.number(),
-            ratingAverage: yup.number(),
+            fullName: yup.string().required(),
+            reviewCount: yup.number().required(),
+            ratingAverage: yup.number().required(),
             url: yup.string(),
-            forksCount: yup.number(),
-            stargazersCount: yup.number(),
-            description: yup.string(),
-            language: yup.string(),
-            ownerAvatarUrl: yup.string(),
-          })
-          .required(),
+            forksCount: yup.number().required(),
+            stargazersCount: yup.number().required(),
+            description: yup.string().required(),
+            language: yup.string().required(),
+            ownerAvatarUrl: yup.string().required(),
+          }),
         cursor: yup.string().required(),
       })
     )

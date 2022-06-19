@@ -3,19 +3,32 @@ import { View } from "react-native";
 import { useNavigate } from "react-router-native";
 import useSignIn from "../hooks/useSignIn";
 import { loginValidationSchema } from "../schema/validationSchemas";
-import { AccessTokenFromApi, SignInFuncProps } from "../types";
 import Button from "./Button";
 import FormikTextInput from "./FormikTextInput";
 
 interface SignInFormProps {
-  onSubmit: (values: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (values: FormikValues) => void;
 }
-const SignInForm: React.FC<SignInFormProps> = ({ onSubmit }) => {
+export const SignInFormContainer: React.FC<SignInFormProps> = ({ onSubmit }) => {
   return (
     <View>
-      <FormikTextInput name="username" placeholder="Username" />
-      <FormikTextInput name="password" placeholder="Password" secureTextEntry />
-      <Button onPress={onSubmit} text="Sign In" />
+      <Formik
+        initialValues={{ username: "", password: "" }}
+        onSubmit={onSubmit}
+        validationSchema={loginValidationSchema}
+      >
+        {({ handleSubmit }) => (
+          <>
+            <FormikTextInput name="username" placeholder="Username" />
+            <FormikTextInput
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+            />
+            <Button onPress={handleSubmit} text="Sign In" />
+          </>
+        )}
+      </Formik>
     </View>
   );
 };
@@ -34,13 +47,7 @@ const SignIn = () => {
   };
   return (
     <View>
-      <Formik
-        initialValues={{ username: "", password: "" }}
-        onSubmit={onSubmit}
-        validationSchema={loginValidationSchema}
-      >
-        {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
-      </Formik>
+      <SignInFormContainer onSubmit={onSubmit} />
     </View>
   );
 };

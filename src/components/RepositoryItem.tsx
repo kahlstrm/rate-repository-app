@@ -51,7 +51,7 @@ const BottomItem: React.FC<BottomItemProps> = ({ name, value }) => {
 };
 const RepositoryItem = (item: RepositoryData) => {
   return (
-    <View style={styles.container}>
+    <View testID="repositoryItem" style={styles.container}>
       <View style={styles.imgAndInfo}>
         <Image style={styles.img} source={{ uri: item.ownerAvatarUrl }} />
         <View style={styles.info}>
