@@ -18,18 +18,18 @@ const RepositoryList = () => {
   if (loading) return <Text center>loading...</Text>;
   console.log(repositories);
 
-  const repositoryNodes = repositories
+  const repositoryNodes:RepositoryData[] = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
-  const renderItem: ListRenderItem<RepositoryData> = ({ item }) => {
-    return <RepositoryItem {...item} />;
-  };
+
   return (
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={(item) => item.id}
-      renderItem={renderItem}
+      renderItem={({ item }) => {
+        return <RepositoryItem {...item} />;
+      }}
       // other props
     />
   );
