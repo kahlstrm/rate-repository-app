@@ -8,7 +8,7 @@ import {
 import Constants from "expo-constants";
 import theme from "../theme";
 import Text, { Subheading } from "./Text";
-import { Link } from "react-router-native";
+import { Link, useNavigate } from "react-router-native";
 import { useApolloClient, useQuery } from "@apollo/client";
 import { USER_INFO } from "../graphql/queries";
 import { userInfoFromApi } from "../types";
@@ -29,33 +29,32 @@ const styles = StyleSheet.create({
 interface TabProps extends PressableProps {
   link?: string;
 }
-const AppBarTab: React.FC<TabProps> = ({ children, link, onPress }) => {
-  if (link)
-    return (
-      <Link to={link} style={styles.tabButton}>
-        <Text fontSize="subheading" color="white">
-          {children}
-        </Text>
-      </Link>
-    );
-  return (
-    <Pressable onPress={onPress} style={styles.tabButton}>
+const AppBarTab: React.FC<TabProps> = (props) => {
+  const content = (
+    <View style={styles.tabButton}>
       <Text fontSize="subheading" color="white">
-        {children}
+        {props.children}
       </Text>
-    </Pressable>
+    </View>
+  );
+  return props.link ? (
+    <Link to={props.link}>{content}</Link>
+  ) : (
+    <Pressable {...props}>{content}</Pressable>
   );
 };
 const AppBar = () => {
   const { data, error, loading } = useQuery<{ me: userInfoFromApi }>(USER_INFO);
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
+  const navigate = useNavigate();
   const logout = async () => {
     await authStorage.removeAccessToken();
-    
+
     apolloClient.resetStore();
+    navigate("/");
   };
-  
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
