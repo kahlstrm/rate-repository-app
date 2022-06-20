@@ -1,12 +1,10 @@
+import React from "react";
 import { Formik, FormikValues } from "formik";
 import { View } from "react-native";
 import { useNavigate } from "react-router-native";
 import useSignIn from "../hooks/useSignIn";
 import useSignUp from "../hooks/useSignUp";
-import {
-  loginValidationSchema,
-  signUpValidationSchema,
-} from "../schema/validationSchemas";
+import { signUpValidationSchema } from "../schema/validationSchemas";
 import theme from "../theme";
 import Button from "./UI/Button";
 import FormikTextInput from "./UI/FormikTextInput";

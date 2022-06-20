@@ -3,9 +3,13 @@ import Constants from "expo-constants";
 import { setContext } from "@apollo/client/link/context";
 import AuthStorage from "./authStorage";
 
+const apolloUrl: string | undefined = Constants.manifest?.extra?.apolloUrl;
+if (!apolloUrl) {
+  throw new Error("apolloUrl missing");
+}
 const httpLink = createHttpLink({
   // Replace the IP address part with your own IP address!
-  uri: `${Constants.manifest?.extra?.apolloUrl}`,
+  uri: `${apolloUrl}`,
 });
 
 const createApolloClient = (authStorage: AuthStorage) => {

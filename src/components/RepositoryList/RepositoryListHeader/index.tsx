@@ -1,4 +1,4 @@
-import { StateProps } from "../../types";
+import { StateProps } from "../../../types";
 import SearchBar from "./SearchBar";
 import SortBySelector from "./SortBySelector";
 

@@ -1,3 +1,4 @@
+import React from "react";
 import { Formik, FormikValues } from "formik";
 import { View } from "react-native";
 import { useNavigate } from "react-router-native";
@@ -39,11 +40,7 @@ export const CreateReviewContainer: React.FC<CreateReviewProps> = ({
               name="rating"
               placeholder="Rating between 0 and 100"
             />
-            <FormikTextInput
-              multiline
-              name="text"
-              placeholder="Review"
-            />
+            <FormikTextInput multiline name="text" placeholder="Review" />
             <Button onPress={handleSubmit} text="Create a review" />
           </>
         )}
@@ -52,7 +49,7 @@ export const CreateReviewContainer: React.FC<CreateReviewProps> = ({
   );
 };
 const CreateReview = () => {
-  const { createReview, result } = useCreateReview();
+  const { createReview } = useCreateReview();
   const navigate = useNavigate();
   const onSubmit = async (values: FormikValues) => {
     if (!reviewValidationSchema.isValidSync(values)) return;

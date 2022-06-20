@@ -12,7 +12,7 @@ fragment RepoDetails on Repository{
   description
   language
 }
-`
+`;
 export const REVIEW_DETAILS=gql`
 fragment ReviewDetails on Review{
   id
@@ -24,4 +24,4 @@ fragment ReviewDetails on Review{
     username
   }
 }
-`
+`;

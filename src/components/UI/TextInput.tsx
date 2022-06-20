@@ -1,3 +1,4 @@
+import React from "react";
 import {
   TextInput as NativeTextInput,
   TextInputProps as NativeTextInputProps,
@@ -11,20 +12,22 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 4,
-    borderWidth:1,
-    borderColor:theme.colors.textSecondary
+    borderWidth: 1,
+    borderColor: theme.colors.textSecondary,
   },
-  error:{
-    borderColor:theme.colors.errorColor
-  }
+  error: {
+    borderColor: theme.colors.errorColor,
+  },
 });
 interface TextInputProps extends NativeTextInputProps {
   error: string | false | undefined;
 }
 const TextInput: React.FC<TextInputProps> = ({ style, error, ...props }) => {
-  const textInputStyle = [styles.textInput,
-    Boolean(error)&& styles.error,
-    style];
+  const textInputStyle = [
+    styles.textInput,
+    Boolean(error) && styles.error,
+    style,
+  ];
 
   return <NativeTextInput style={textInputStyle} {...props} />;
 };

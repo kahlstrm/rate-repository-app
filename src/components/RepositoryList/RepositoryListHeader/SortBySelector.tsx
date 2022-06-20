@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import { View } from "react-native";
-import theme from "../../theme";
-import Text from "../UI/Text";
+import theme from "../../../theme";
+import Text from "../../UI/Text";
 
 const SortBySelector: React.FC<{
   selected: string;

@@ -6,6 +6,7 @@ import {
   PressableProps,
 } from "react-native";
 import Constants from "expo-constants";
+import React from "react";
 import theme from "../theme";
 import Text from "./UI/Text";
 import { Link, useNavigate } from "react-router-native";
@@ -44,7 +45,7 @@ const AppBarTab: React.FC<TabProps> = (props) => {
   );
 };
 const AppBar = () => {
-  const { data, error, loading } = useQuery<{ me: UserInfoFromApi }>(USER_INFO);
+  const { data } = useQuery<{ me: UserInfoFromApi }>(USER_INFO);
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
   const navigate = useNavigate();

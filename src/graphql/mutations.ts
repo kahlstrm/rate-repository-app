@@ -26,4 +26,4 @@ mutation($user: CreateUserInput)  {
     username
   }
 }
-`
+`;

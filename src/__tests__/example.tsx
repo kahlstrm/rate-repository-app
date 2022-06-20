@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { Text, TextInput, Pressable, View } from "react-native";
 import { render, fireEvent } from "@testing-library/react-native";
