@@ -1,7 +1,9 @@
+import React from "react";
 import { RepositoryListContainer } from "../../components/RepositoryList";
 import { render, within } from "@testing-library/react-native";
 import "@testing-library/jest-native/extend-expect"; //typing otherwise not working so have to import
 import { RepositoryDataFromApi } from "../../types";
+import { NativeRouter } from "react-router-native";
 describe("RepositoryList", () => {
   describe("RepositoryListContainer", () => {
     it("renders repository information correctly", () => {
@@ -47,12 +49,24 @@ describe("RepositoryList", () => {
           },
         ],
       } as RepositoryDataFromApi; // some weird thing with optional types that after long googling seems to be broken on yup's end. https://github.com/jquense/yup/issues/916
-      const { debug, getAllByTestId } = render(
-        <RepositoryListContainer repositories={repositories} />
+      const selected = "latest";
+      const setSelected = jest.fn();
+      const searchWord = "";
+      const setSearchWord = jest.fn();
+      const { getAllByTestId } = render(
+        <NativeRouter>
+          <RepositoryListContainer
+            state={{ searchWord, setSearchWord, selected, setSelected }}
+            onEndReach={() => console.log("end")}
+            repositories={repositories}
+          />
+        </NativeRouter>
       );
       const repoItems = getAllByTestId("repositoryItem");
       const [firstItem, secondItem] = repoItems;
-      const [firstData,secondData] = repositories.edges.map(edge=>edge.node);
+      const [firstData, secondData] = repositories.edges.map(
+        (edge) => edge.node
+      );
 
       expect(firstItem).toHaveTextContent(firstData.fullName);
       expect(firstItem).toHaveTextContent(firstData.language);
@@ -69,7 +83,7 @@ describe("RepositoryList", () => {
       expect(
         within(firstItem).getByText("Reviews").parent?.parent
       ).toHaveTextContent(firstData.reviewCount.toString());
-      
+
       expect(secondItem).toHaveTextContent(secondData.fullName);
       expect(secondItem).toHaveTextContent(secondData.language);
       //overcomplex solution but just testing
