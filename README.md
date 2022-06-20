@@ -1,5 +1,5 @@
 # rate-repository-app
-A frontend mobile app for rating repositories made with React Native and Typescript. This was done as a part of the course Full Stack Open 2022 in Helsinki University
+An app for rating repositories made with React Native and Typescript. This was done as a part of the course Full Stack Open 2022 in Helsinki University
 
 
 ## Dependencies
