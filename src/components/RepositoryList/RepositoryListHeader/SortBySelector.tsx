@@ -1,3 +1,4 @@
+import React from "react";
 import { Picker } from "@react-native-picker/picker";
 import { View } from "react-native";
 import theme from "../../../theme";

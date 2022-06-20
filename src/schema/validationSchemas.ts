@@ -22,6 +22,41 @@ export const userInfoSchema = yup.object({
   id: yup.string().required(),
   username: yup.string().required(),
 });
+const pageInfoSchema = yup.object({
+  hasNextPage: yup.boolean(),
+  hasPreviousPage: yup.boolean(),
+  startCursor: yup.string().nullable(),
+  endCursor: yup.string().nullable(),
+});
+export const reviewSchema = yup.object({
+  id: yup.string().required(),
+  text: yup.string(),
+  rating: yup.number().required(),
+  createdAt: yup.date().required(),
+  user: userInfoSchema.required(),
+});
+export const userInfoWithReviewsSchema = userInfoSchema.shape({
+  reviews: yup
+    .object({
+      edges: yup
+        .array(
+          yup.object({
+            node: reviewSchema.shape({
+              repository: yup
+                .object({
+                  fullName: yup.string().required(),
+                  id: yup.string().required(),
+                })
+                .required(),
+            }),
+            cursor: yup.string().required(),
+          })
+        )
+        .required(),
+      pageInfo: pageInfoSchema.required(),
+    })
+    .required(),
+});
 export const createReviewResponseSchema = yup
   .object({
     repositoryId: yup.string().required(),
@@ -32,16 +67,9 @@ export const accessTokenSchema = yup.object().shape({
   accessToken: yup.string().required(),
 });
 
-export const reviewSchema = yup.object({
-  id: yup.string().required(),
-  text: yup.string(),
-  rating: yup.number().required(),
-  createdAt: yup.date().required(),
-  user: userInfoSchema.required(),
-});
 export const repoSchema = yup.object({
   id: yup.string().required(),
-  ownerName: yup.string(),
+  ownerName: yup.string().notRequired(),
   fullName: yup.string().required(),
   reviewCount: yup.number().required(),
   ratingAverage: yup.number().required(),
@@ -51,6 +79,7 @@ export const repoSchema = yup.object({
   language: yup.string().required(),
   ownerAvatarUrl: yup.string().required(),
 });
+
 export const repoSchemaFull = repoSchema.shape({
   reviews: yup
     .object({
@@ -58,10 +87,12 @@ export const repoSchemaFull = repoSchema.shape({
         .array(
           yup.object({
             node: reviewSchema,
+            cursor: yup.string(),
           })
         )
         .required(),
-      cursor: yup.string(),
+      totalCount: yup.number().required(),
+      pageInfo: pageInfoSchema.required(),
     })
     .required(),
   url: yup.string().required(),
@@ -76,13 +107,5 @@ export const repoResponseSchema = yup.object().shape({
       })
     )
     .required(),
-  pageInfo: yup
-    .object()
-    .shape({
-      hasNextPage: yup.boolean(),
-      hasPreviousPage: yup.boolean(),
-      startCursor: yup.string(),
-      endCursor: yup.string(),
-    })
-    .required(),
+  pageInfo: pageInfoSchema.required(),
 });

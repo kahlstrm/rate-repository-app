@@ -6,11 +6,15 @@ export const GET_REPOSITORIES = gql`
     $orderBy: AllRepositoriesOrderBy
     $orderDirection: OrderDirection
     $searchKeyword: String
+    $first: Int
+    $after: String
   ) {
     repositories(
       orderBy: $orderBy
       orderDirection: $orderDirection
       searchKeyword: $searchKeyword
+      first: $first
+      after: $after
     ) {
       totalCount
       pageInfo {
@@ -30,15 +34,23 @@ export const GET_REPOSITORIES = gql`
   ${REPO_DETAILS}
 `;
 export const GET_REPO = gql`
-  query ($id: ID!) {
+  query ($id: ID!, $first: Int, $after: String) {
     repository(id: $id) {
       ...RepoDetails
       url
-      reviews {
+      reviews(first: $first, after: $after) {
+        totalCount
         edges {
           node {
             ...ReviewDetails
           }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
         }
       }
     }
@@ -47,10 +59,30 @@ export const GET_REPO = gql`
   ${REVIEW_DETAILS}
 `;
 export const USER_INFO = gql`
-  query {
-    me {
-      id
-      username
+query getCurrentUser($includeReviews: Boolean = false) {
+  me {
+    id
+    username
+    reviews @include(if: $includeReviews) {
+      edges {
+        node {
+          ...ReviewDetails
+          repository{
+            fullName
+            id
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
     }
   }
+}
+
+${REVIEW_DETAILS}
 `;

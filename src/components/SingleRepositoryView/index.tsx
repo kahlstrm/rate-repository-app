@@ -1,5 +1,6 @@
+import React from "react";
 import { useQuery } from "@apollo/client";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList } from "react-native";
 import { useParams } from "react-router-native";
 import { GET_REPO } from "../../graphql/queries";
 import { repoSchemaFull } from "../../schema/validationSchemas";
@@ -11,12 +12,18 @@ import ReviewItem from "./Review";
 import ItemSeparator from "../UI/ItemSeparator";
 const SingleRepositoryView = () => {
   const { id } = useParams();
-  const { data } = useQuery<{ repository: RepositoryData }>(GET_REPO, {
-    variables: {
-      id: id,
-    },
-    fetchPolicy: "cache-and-network",
-  });
+
+  const variables = {
+    first: 2,
+    id: id,
+  };
+  const { data, loading, fetchMore } = useQuery<{ repository: RepositoryData }>(
+    GET_REPO,
+    {
+      variables,
+      fetchPolicy: "cache-and-network",
+    }
+  );
   const repository = data?.repository;
 
   if (!repoSchemaFull.isValidSync(repository)) {
@@ -31,6 +38,8 @@ const SingleRepositoryView = () => {
     ...edge.node,
     createdAt: new Date(edge.node.createdAt),
   }));
+  console.log(reviews);
+
   return (
     <>
       <FlatList
@@ -42,15 +51,27 @@ const SingleRepositoryView = () => {
         }}
         ListHeaderComponent={() => (
           <>
-          <RepositoryItem {...repository}>
-            <Button
-              text="Open in GitHub"
-              onPress={() => Linking.openURL(repository.url)}
-            />
-          </RepositoryItem>
-          <ItemSeparator/>
+            <RepositoryItem {...repository}>
+              <Button
+                text="Open in GitHub"
+                onPress={() => Linking.openURL(repository.url)}
+              />
+            </RepositoryItem>
+            <ItemSeparator />
           </>
         )}
+        onEndReached={() => {
+          const canFetchMore =
+            !loading && repository.reviews.pageInfo.hasNextPage;
+          if (!canFetchMore) return;
+          fetchMore({
+            variables: {
+              after: repository.reviews.pageInfo.endCursor,
+              ...variables,
+            },
+          });
+        }}
+        onEndReachedThreshold={0.5}
       />
     </>
   );

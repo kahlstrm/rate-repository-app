@@ -7,6 +7,7 @@ import {
   reviewSchema,
   reviewValidationSchema,
   userInfoSchema,
+  userInfoWithReviewsSchema,
 } from "./schema/validationSchemas";
 export type RepositoryData = yup.InferType<typeof repoSchema>;
 
@@ -35,6 +36,11 @@ export type CreateReviewProps = yup.InferType<typeof reviewValidationSchema>;
 export type CreateReviewResponse = yup.InferType<
   typeof createReviewResponseSchema
 >;
+
+export type UserInfoWithReviews = yup.InferType<
+  typeof userInfoWithReviewsSchema
+>;
+
 export interface SignInFuncProps {
   username: string;
   password: string;

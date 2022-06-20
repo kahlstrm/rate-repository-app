@@ -40,15 +40,14 @@ export class RepositoryListContainer extends React.Component<RepoListContainerPr
 const RepositoryList = () => {
   const [selectedSort, setSelectedSort] = useState("latest");
   const [searchWord, setSearchWord] = useState("");
-  const [searchWordDebounced] = useDebounce(searchWord, 500);
-  const { repositories, loading } = useRepositories(
+  const [searchKeyword] = useDebounce(searchWord, 500);
+  const { repositories, fetchMore } = useRepositories({
     selectedSort,
-    searchWordDebounced
-  );
+    searchKeyword,
+  });
   const onEndReach = () => {
-    console.log("end");
+    fetchMore();
   };
-  console.log(searchWordDebounced);
 
   return (
     <RepositoryListContainer

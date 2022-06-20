@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import theme from "../../theme";
 import { Review } from "../../types";
@@ -6,7 +7,7 @@ import Text from "../UI/Text";
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.white,
-    padding:10
+    padding: 10,
   },
   rating: {
     width: 40,
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
     justifyContent: "center",
     alignItems: "center",
-    marginRight:10,
+    marginRight: 10,
   },
   top: {
     flexDirection: "row",
@@ -39,26 +40,29 @@ const NameDateReview: React.FC<{
   date: Date;
   reviewText: string | undefined;
 }> = ({ name, date, reviewText }) => {
-  
   return (
     <View style={styles.rightContent}>
       <Text fontWeight="bold">{name}</Text>
-      <Text color="textSecondary">{date.toDateString()}</Text>
+      <Text color="textSecondary">{new Date(date).toDateString()}</Text>
       <Text>{reviewText}</Text>
     </View>
   );
 };
-const ReviewItem: React.FC<{ review: Review }> = ({ review }) => {
+const ReviewItem: React.FC<{
+  repoFullName?: string;
+  review: Review;
+}> = ({ review, repoFullName, children }) => {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <Rating rating={review.rating} />
         <NameDateReview
-          name={review.user.username}
+          name={repoFullName ? repoFullName : review.user.username}
           date={review.createdAt}
           reviewText={review.text}
         />
       </View>
+      {children}
     </View>
   );
 };

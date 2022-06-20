@@ -1,3 +1,4 @@
+import React from "react";
 import { StateProps } from "../../../types";
 import SearchBar from "./SearchBar";
 import SortBySelector from "./SortBySelector";

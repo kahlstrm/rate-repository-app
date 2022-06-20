@@ -7,8 +7,9 @@ export interface Theme {
     primary: string;
     white: string;
     appBarBGColor: string;
-    mainBackground:string;
-    errorColor:string;
+    mainBackground: string;
+    errorColor: string;
+    red: string;
   };
   fontSizes: {
     body: number;
@@ -31,8 +32,9 @@ const theme: Theme = {
     primary: "#0366d6",
     white: "white",
     appBarBGColor: "#24292e",
-    mainBackground:"lightblue",
-    errorColor:"#d73a4a"
+    mainBackground: "lightblue",
+    errorColor: "#d73a4a",
+    red: "#ff0000",
   },
   fontSizes: {
     body: 14,
@@ -41,9 +43,9 @@ const theme: Theme = {
   },
   fonts: {
     main: Platform.select({
-      android:'Roboto',
-      ios:'Arial',
-      default:'System'
+      android: "Roboto",
+      ios: "Arial",
+      default: "System",
     }),
   },
   fontWeights: {
