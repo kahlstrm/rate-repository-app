@@ -9,6 +9,7 @@ import RepositoryListHeader from "./RepositoryListHeader";
 interface RepoListContainerProps {
   repositories: RepositoryDataFromApi | undefined;
   state: StateProps;
+  onEndReach: () => void;
 }
 export class RepositoryListContainer extends React.Component<RepoListContainerProps> {
   repositoryNodes: () => RepositoryData[] = () =>
@@ -29,6 +30,8 @@ export class RepositoryListContainer extends React.Component<RepoListContainerPr
           return <RepositoryItem pressable {...item} />;
         }}
         ListHeaderComponent={this.renderHeader}
+        onEndReached={this.props.onEndReach}
+        onEndReachedThreshold={0.5}
         // other props
       />
     );
@@ -42,7 +45,9 @@ const RepositoryList = () => {
     selectedSort,
     searchWordDebounced
   );
-
+  const onEndReach = () => {
+    console.log("end");
+  };
   console.log(searchWordDebounced);
 
   return (
@@ -53,6 +58,7 @@ const RepositoryList = () => {
         selected: selectedSort,
         setSelected: setSelectedSort,
       }}
+      onEndReach={onEndReach}
       repositories={repositories}
     />
   );
