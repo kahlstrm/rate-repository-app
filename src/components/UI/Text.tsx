@@ -5,14 +5,14 @@ import {
   TextStyle,
 } from "react-native";
 
-import theme, { Theme } from "../theme";
+import theme, { Theme } from "../../theme";
 
 const styles = StyleSheet.create({
   text: {
     color: theme.colors.textPrimary,
     fontSize: theme.fontSizes.body,
     fontFamily: theme.fonts.main,
-    fontWeight: theme.fontWeights.normal,
+    fontWeight: theme.fontWeights.normal
   },
   colorTextSecondary: {
     color: theme.colors.textSecondary,

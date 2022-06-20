@@ -3,13 +3,13 @@ import {
   TextInputProps as NativeTextInputProps,
   StyleSheet,
 } from "react-native";
-import theme from "../theme";
+import theme from "../../theme";
 
 const styles = StyleSheet.create({
   textInput: {
     backgroundColor: "white",
     padding: 10,
-    margin: 5,
+    margin: 10,
     borderRadius: 4,
     borderWidth:1,
     borderColor:theme.colors.textSecondary

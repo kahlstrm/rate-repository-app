@@ -2,23 +2,27 @@ import { Formik, FormikValues } from "formik";
 import { View } from "react-native";
 import { useNavigate } from "react-router-native";
 import useSignIn from "../hooks/useSignIn";
-import { loginValidationSchema } from "../schema/validationSchemas";
+import useSignUp from "../hooks/useSignUp";
+import {
+  loginValidationSchema,
+  signUpValidationSchema,
+} from "../schema/validationSchemas";
 import theme from "../theme";
 import Button from "./UI/Button";
 import FormikTextInput from "./UI/FormikTextInput";
 
-interface SignInFormProps {
+interface SignUpFormProps {
   onSubmit: (values: FormikValues) => void;
 }
-export const SignInFormContainer: React.FC<SignInFormProps> = ({
+export const SignUpFormContainer: React.FC<SignUpFormProps> = ({
   onSubmit,
 }) => {
   return (
     <View style={{ backgroundColor: theme.colors.white }}>
       <Formik
-        initialValues={{ username: "", password: "" }}
+        initialValues={{ username: "", password: "", passwordValidation: "" }}
         onSubmit={onSubmit}
-        validationSchema={loginValidationSchema}
+        validationSchema={signUpValidationSchema}
       >
         {({ handleSubmit }) => (
           <>
@@ -28,6 +32,11 @@ export const SignInFormContainer: React.FC<SignInFormProps> = ({
               placeholder="Password"
               secureTextEntry
             />
+            <FormikTextInput
+              name="passwordValidation"
+              placeholder="Password confirmation"
+              secureTextEntry
+            />
             <Button onPress={handleSubmit} text="Sign In" />
           </>
         )}
@@ -35,14 +44,21 @@ export const SignInFormContainer: React.FC<SignInFormProps> = ({
     </View>
   );
 };
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
+  const { signUp } = useSignUp();
   const { signIn } = useSignIn();
   const onSubmit = async (values: FormikValues) => {
     const { username, password } = values;
     try {
-      const { data } = await signIn({ username, password });
-      console.log(data);
+      const { data } = await signUp({ username, password });
+      if (!data?.createUser.username) {
+        console.log("account creation failure");
+      }
+      console.log("create account OK");
+
+      const { data: loginData } = await signIn({ username, password });
+      console.log(loginData);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -50,9 +66,9 @@ const SignIn = () => {
   };
   return (
     <View>
-      <SignInFormContainer onSubmit={onSubmit} />
+      <SignUpFormContainer onSubmit={onSubmit} />
     </View>
   );
 };
 
-export default SignIn;
+export default SignUp;

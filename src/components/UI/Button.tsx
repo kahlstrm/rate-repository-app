@@ -1,5 +1,5 @@
 import { Pressable, PressableProps, StyleSheet } from "react-native";
-import theme, { Theme } from "../theme";
+import theme, { Theme } from "../../theme";
 import Text from "./Text";
 interface ButtonProps extends PressableProps {
   text?: string;
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.colors.primary,
     borderRadius:4,
-    margin: 5,
+    margin: 10,
     paddingVertical:10
   },
   text:{

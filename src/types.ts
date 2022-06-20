@@ -1,20 +1,14 @@
 import * as yup from "yup";
 import {
   accessTokenSchema,
+  createReviewResponseSchema,
   repoResponseSchema,
+  repoSchema,
+  reviewSchema,
+  reviewValidationSchema,
   userInfoSchema,
 } from "./schema/validationSchemas";
-export interface RepositoryData {
-  id: string;
-  fullName: string;
-  description: string;
-  language: string;
-  forksCount: number;
-  stargazersCount: number;
-  ratingAverage: number;
-  reviewCount: number;
-  ownerAvatarUrl: string;
-}
+export type RepositoryData = yup.InferType<typeof repoSchema>;
 
 // export interface RepositoryDataFromApi {
 //   totalCount: number;
@@ -34,9 +28,20 @@ export type RepositoryDataFromApi = yup.InferType<typeof repoResponseSchema>;
 
 export type AccessTokenFromApi = yup.InferType<typeof accessTokenSchema>;
 
-export type userInfoFromApi = yup.InferType<typeof userInfoSchema>;
+export type UserInfoFromApi = yup.InferType<typeof userInfoSchema>;
 
+export type Review = yup.InferType<typeof reviewSchema>;
+export type CreateReviewProps = yup.InferType<typeof reviewValidationSchema>;
+export type CreateReviewResponse = yup.InferType<
+  typeof createReviewResponseSchema
+>;
 export interface SignInFuncProps {
   username: string;
   password: string;
+}
+export interface StateProps {
+  searchWord: string;
+  setSearchWord: React.Dispatch<React.SetStateAction<string>>;
+  selected: string;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
 }

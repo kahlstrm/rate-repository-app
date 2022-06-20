@@ -7,11 +7,11 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import theme from "../theme";
-import Text, { Subheading } from "./Text";
+import Text from "./UI/Text";
 import { Link, useNavigate } from "react-router-native";
 import { useApolloClient, useQuery } from "@apollo/client";
 import { USER_INFO } from "../graphql/queries";
-import { userInfoFromApi } from "../types";
+import { UserInfoFromApi } from "../types";
 import useAuthStorage from "../hooks/useAuthStorage";
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +32,7 @@ interface TabProps extends PressableProps {
 const AppBarTab: React.FC<TabProps> = (props) => {
   const content = (
     <View style={styles.tabButton}>
-      <Text fontSize="subheading" color="white">
+      <Text fontWeight="bold" fontSize="subheading" color="white">
         {props.children}
       </Text>
     </View>
@@ -44,7 +44,7 @@ const AppBarTab: React.FC<TabProps> = (props) => {
   );
 };
 const AppBar = () => {
-  const { data, error, loading } = useQuery<{ me: userInfoFromApi }>(USER_INFO);
+  const { data, error, loading } = useQuery<{ me: UserInfoFromApi }>(USER_INFO);
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
   const navigate = useNavigate();
@@ -60,9 +60,15 @@ const AppBar = () => {
       <ScrollView horizontal>
         <AppBarTab link={"/"}>Repositories</AppBarTab>
         {data?.me ? (
-          <AppBarTab onPress={logout}>Sign Out</AppBarTab>
+          <>
+            <AppBarTab link="/create">Create a review</AppBarTab>
+            <AppBarTab onPress={logout}>Sign Out</AppBarTab>
+          </>
         ) : (
-          <AppBarTab link={"/login"}>Sign In</AppBarTab>
+          <>
+            <AppBarTab link="/login">Sign In</AppBarTab>
+            <AppBarTab link="/signup">Sign Up</AppBarTab>
+          </>
         )}
       </ScrollView>
     </View>
